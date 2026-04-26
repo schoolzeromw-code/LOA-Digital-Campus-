@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOA | Student Portal</title>
+    <style>
+        :root { --navy: #002147; --gold: #C5A021; --white: #ffffff; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; display: flex; background-color: #f0f2f5; }
+        
+        /* Sidebar - UNIMA Style */
+        .sidebar { width: 260px; height: 100vh; background: var(--navy); color: white; position: fixed; padding-top: 20px; box-shadow: 2px 0 5px rgba(0,0,0,0.1); }
+        .sidebar h2 { text-align: center; color: var(--gold); font-size: 22px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 20px; }
+        .nav-item { padding: 15px 25px; cursor: pointer; transition: 0.3s; display: block; color: white; text-decoration: none; }
+        .nav-item:hover { background: var(--gold); color: var(--navy); font-weight: bold; }
+
+        /* Main Content area */
+        .main-content { margin-left: 260px; width: 100%; padding: 40px; }
+        .header { background: white; padding: 20px; border-radius: 8px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        
+        /* The Protection Card */
+        .card { background: white; padding: 30px; border-radius: 12px; border-top: 10px solid var(--gold); box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .status-badge { padding: 8px 15px; border-radius: 20px; font-weight: bold; font-size: 14px; }
+        .locked { background: #ffebee; color: #c62828; }
+        .cleared { background: #e8f5e9; color: #2e7d32; }
+        
+        .btn-enter { background: var(--navy); color: white; padding: 15px 30px; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; margin-top: 20px; }
+        .btn-enter:disabled { background: #ccc; cursor: not-allowed; }
+
+        /* Support Button */
+        .whatsapp-btn { position: fixed; bottom: 30px; right: 30px; background: #25D366; color: white; padding: 15px 25px; border-radius: 50px; text-decoration: none; font-weight: bold; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>LOA DIGITAL</h2>
+        <a href="#" class="nav-item">Dashboard</a>
+        <a href="#" class="nav-item">My Courses</a>
+        <a href="#" class="nav-item">Financial Records</a>
+        <a href="#" class="nav-item">Exam Results</a>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1>Student Portal</h1>
+            <div id="user-display">ID: LOA-2026-001</div>
+        </div>
+
+        <div class="card">
+            <h3>Course Access Control</h3>
+            <p>System is checking your financial clearance status in the SQL database...</p>
+            <div id="status-area">
+                <span class="status-badge">Checking...</span>
+            </div>
+            <br>
+            <button class="btn-enter" id="courseBtn" disabled>Enter Online Classroom</button>
+        </div>
+    </div>
+
+    <a href="https://wa.me/265893110685" class="whatsapp-btn">Chat with Support</a>
+
+    <script>
+        async function loadStatus() {
+            try {
+                const response = await fetch('/api/status');
+                const data = await response.json();
+                const area = document.getElementById('status-area');
+                const btn = document.getElementById('courseBtn');
+
+                if (data.Balance > 0) {
+                    area.innerHTML = `<span class="status-badge locked">⚠️ LOCKED: Balance MK ${data.Balance}</span>`;
+                } else {
+                    area.innerHTML = `<span class="status-badge cleared">✅ CLEARED: No Outstanding Balance</span>`;
+                    btn.disabled = false;
+                    btn.style.background = "#C5A021"; // Changes to Gold when ready
+                }
+            } catch (err) {
+                document.getElementById('status-area').innerText = "Unable to reach SQL Server.";
+            }
+        }
+        window.onload = loadStatus;
+    </script>
+</body>
+</html>
