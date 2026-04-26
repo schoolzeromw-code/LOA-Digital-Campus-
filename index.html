@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOA | Student Portal</title>
+    <link rel="stylesheet" href="style.css"> </head>
+<body>
+
+    <div class="sidebar">
+        <div class="logo-box">
+            <img src="loa-logo.png" alt="LOA Logo">
+        </div>
+        <nav class="nav-menu">
+            <a href="index.html" class="active">Dashboard</a>
+            <a href="classroom.html">Classroom</a>
+            <a href="finance.html">Finance</a>
+            <a href="support.html">Support</a>
+        </nav>
+    </div>
+
+    <main class="content">
+        <header class="top-bar">
+            <h1>Welcome, <span id="student-name">Scholar</span></h1>
+            <div class="status-indicator" id="lock-status">Checking Status...</div>
+        </header>
+
+        <section class="dashboard-grid">
+            <div class="card">
+                <h3>Current Enrollment</h3>
+                <p id="course-title">Software Engineering</p>
+                <button class="btn-primary" id="enter-class">Enter Classroom</button>
+            </div>
+
+            <div class="card">
+                <h3>Account Balance</h3>
+                <h2 id="balance-amount">MK 0.00</h2>
+                <p>Status: <span id="payment-status">Clear</span></p>
+            </div>
+        </section>
+    </main>
+
+    <a href="https://wa.me/265893110685" class="whatsapp-float">
+        Need Help? Chat with us
+    </a>
+
+</body>
+</html>
